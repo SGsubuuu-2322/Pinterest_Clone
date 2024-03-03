@@ -37,7 +37,7 @@ body {
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 10px;
-  line-height: 26px;
+  line-height: 1;
 }
 .detail {
   width: 100%;

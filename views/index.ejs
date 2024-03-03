@@ -17,29 +17,30 @@
         />
         <p class="header">Make account to see more</p>
 
-        <input type="email" placeholder="Email" class="detail" /><br />
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          class="detail"
-        /><br />
-        <input
-          type="text"
-          name="fullname"
-          placeholder="Fullname"
-          class="detail"
-        /><br />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          class="detail"
-        />
+        <form action="/register" method="post">
+          <input type="email" name="email" placeholder="Email" class="detail" /><br />
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            class="detail"
+          /><br />
+          <input
+            type="text"
+            name="fullname"
+            placeholder="Fullname"
+            class="detail"
+          /><br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="detail"
+          />
+          <input type="submit" class="btn int" value="Register Account"></input>
+        </form>
+        <a href="/forgot">Forgot your password?</a>
 
-        <h4>Forgot your password?</h4>
-
-        <button class="btn int">Log in</button>
         <p class="or">OR</p>
         <button class="btn fbk">
           <i
