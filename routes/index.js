@@ -3,29 +3,53 @@ var router = express.Router();
 
 const userModel = require("./users");
 const postModel = require("./posts");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+passport.authenticate(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/createuser", async function (req, res) {
-  const createdUser = await userModel.create({
-    userName: "SGsubu@2322",
-    password: "SGshreyans@232214",
-    posts: [],
-    email: "SGsubuuu143@gmail.com",
-    fullName: "Subham Kumar Pradhan",
-  });
-
-  res.send(createdUser);
+router.get("/profile", isLoggedIn, function (req, res) {
+  return res.send("Profile");
 });
-router.get("/createpost", async function (req, res) {
-  const createdPost = await postModel.create({
-    postText: "Hii Bhaiyaa",
-  });
 
-  res.send(createdPost);
+router.post("/register", async function (req, res) {
+  const { username, email, fullname } = req.body;
+  const userData = new userModel({ username, email, fullname });
+
+  userModel.register(userData, req.body.password).then(function () {
+    passport.authenticate("local")(req, res, function () {
+      res.redirect("/profile");
+    });
+  });
 });
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/profile",
+    failureRedirect: "/",
+  }),
+  function (req, res) {}
+);
+
+router.get("/logout", function (req, res) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect("/");
+  });
+});
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) return next();
+
+  return res.redirect("/");
+}
 
 module.exports = router;
